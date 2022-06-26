@@ -1,0 +1,80 @@
+//**Clock vars**
+$clockWidth: 200px;
+$clockHeight: 200px;
+//**Arrows vars**
+$arrowSecHeight: 0.95 * $clockHeight / 2;
+$arrowSecWidth: 2px;
+$arrowSecOffset: 15px;
+//---
+$arrowMinHeight: 0.7 * $clockHeight / 2;
+$arrowMinWidth: 3px;
+$arrowMinOffset: 15px;
+//---
+$arrowHrsHeight: $arrowMinHeight / 2;
+$arrowHrsWidth: 3px;
+$arrowHrsOffset: 10px;
+//**Marks vars**
+$markGap: 5px;
+$markWidth: 6px;
+
+.App {
+    padding: 100px;
+}
+
+.analog-clock {
+    position: relative;
+    width: $clockWidth;
+    height: $clockHeight;
+    border-radius: 100%;
+    border: 1px solid black;
+    background: linear-gradient(to right, #ccc, rgb(193, 187, 187), rgba(204, 204, 204, 0.362));
+}
+
+.arrow {
+    position: absolute;
+    &_sec {
+        width: $arrowSecWidth;
+        height: $arrowSecHeight + $arrowSecOffset;
+        transform-origin: 50% $arrowSecHeight;
+        background-color: red;
+        top: $clockHeight / 2 - $arrowSecHeight;
+        left: calc(50% - $arrowSecWidth / 2);
+        z-index: 3;
+    }
+
+    &_min {
+        width: $arrowMinWidth;
+        height: $arrowMinHeight + $arrowMinOffset;
+        transform-origin: 50% $arrowMinHeight;
+        background-color: black;
+        top: $clockHeight / 2 - $arrowMinHeight;
+        left: calc(50% - $arrowMinWidth / 2);
+        z-index: 2;
+    }
+
+    &_hrs {
+        width: $arrowHrsWidth;
+        height: $arrowHrsHeight + $arrowHrsOffset;
+        transform-origin: 50% $arrowHrsHeight;
+        background-color: black;
+        top: $clockHeight / 2 - $arrowHrsHeight;
+        left: calc(50% - $arrowHrsWidth / 2);
+        z-index: 1;
+    }
+}
+
+.mark {
+    position: absolute;
+    left: calc(50% - $markWidth / 2);
+    height: $clockHeight;
+    width: $markWidth;
+    z-index: 0;
+
+    &__tip {
+        margin-top: $markGap;
+        width: $markWidth;
+        height: $markWidth;
+        border-radius: 100%;
+        background-color: black;
+    }
+}
