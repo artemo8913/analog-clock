@@ -6,7 +6,7 @@ import DigitClock from "./DigitClock";
 export default function Clock(props: { time: Time, timeZones: TimeZones, onChange: (zoneIndex: number) => void }) {
     const { time, timeZones, onChange } = props;
     return (
-        <div>
+        <div className="clock">
             <AnalogClock time={time} />
             <DigitClock time={time} />
             <select onChange={(event) => onChange(timeZones.findIndex((zone)=>event.target.value === zone.name))}>

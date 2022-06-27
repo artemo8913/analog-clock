@@ -18,7 +18,16 @@ $markGap: 5px;
 $markWidth: 6px;
 
 .App {
-    padding: 100px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.clock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .analog-clock {

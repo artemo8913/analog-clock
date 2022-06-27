@@ -4,6 +4,7 @@ import './App.scss';
 import Clock from './components/Clock';
 import { addClock, changeClockTimeZone, setTimeZones } from './features/clockSlice';
 import { RootState } from './app/store';
+import Loading from './components/Loading';
 
 function convertTimeForClock(currentTime: Date, timeZone: string) {
   const utcTime = - currentTime.getTimezoneOffset() / 60;
@@ -23,24 +24,31 @@ export default function App() {
   const clocks = useSelector((store: RootState) => store.clock.displayedClocks);
   const timeZones = useSelector((store: RootState) => store.clock.timeZones);
   React.useEffect(() => {
-    if(timeZones) return;
+    if (timeZones) return;
     (async () => {
       const response = await fetch('./timezones.json');
       const result: TimeZones = await response.json();
-      dispatch(setTimeZones(result));
-      dispatch(addClock([{ timeZoneIdx: 0 }, { timeZoneIdx: 0 }]));
+      // setTimeout служит для того, чтобы не сразу сохранять в сотояние данные
+      // о часовых поясах из json файла и, тем самым, загрузочный экран мгновенно не исчезал
+      setTimeout(() => {
+        dispatch(setTimeZones(result));
+        dispatch(addClock([{ timeZoneIdx: 0 }, { timeZoneIdx: 0 }]));
+      }, 1000);
     })()
   }, []);
   setTimeout(() => setDate(new Date()), 1000);
 
   return (
-      <div className="App">
-        {timeZones && clocks.map((clock, clockIdx) =>
+    <div className="App">
+      {timeZones ?
+        clocks.map((clock, clockIdx) =>
           <Clock
             time={convertTimeForClock(date, timeZones[clock.timeZoneIdx].timezone)}
             onChange={(timeZoneIdx) => dispatch(changeClockTimeZone({ clockIdx, timeZoneIdx }))}
             timeZones={timeZones}
-          />)}
-      </div>
+          />)
+        :
+        <Loading />}
+    </div>
   );
 }
