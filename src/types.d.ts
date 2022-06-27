@@ -7,3 +7,6 @@ type TimeZones = Array<{
     timezone: string,
     name: string
 }>;
+type ClockConfig = {
+    timeZoneIdx: number;
+};
